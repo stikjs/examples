@@ -35,7 +35,7 @@ stik.controller("TodosCtrl", "List", function($template, $courier, $viewBag){
       footer.setStyle("display", "none");
     }
 
-    $viewBag.$render({
+    $viewBag.$push({
       todosSize: self.todos.length
     });
 
@@ -60,7 +60,7 @@ stik.controller("TodosCtrl", "List", function($template, $courier, $viewBag){
       completedMarker.setStyle("display", "none");
     }
 
-    $viewBag.$render({
+    $viewBag.$push({
       completed: completed.length
     });
   }
@@ -79,7 +79,7 @@ stik.controller("TodosCtrl", "Show", function($template, $viewBag, $courier){
   var remove    = $template.getElement(".destroy");
 
   function updateView(todoData){
-    $viewBag.$render(todoData);
+    $viewBag.$push(todoData);
   }
 
   toggle.addEvent("change", function(event){
