@@ -1,13 +1,12 @@
-stik.register("TodosCtrl", "List", function($template, $courier, $viewBag){
-  var self, tpl, todosElms, footer;
+stik.controller("TodosCtrl", "List", function($template, $courier, $viewBag){
+  var self, todosElms, footer;
 
   self = this;
   self.todos = [];
 
-  tpl             = $($template);
-  listElm         = tpl.getElementById("todo-list");
-  footer          = tpl.getElement("footer");
-  completedMarker = tpl.getElementById("clear-completed");
+  listElm         = $template.getElementById("todo-list");
+  footer          = $template.getElement("footer");
+  completedMarker = $template.getElementById("clear-completed");
 
   function addTodo(todo){
     self.todos.push(todo);
@@ -71,14 +70,13 @@ stik.register("TodosCtrl", "List", function($template, $courier, $viewBag){
   $courier.$receive("todo-updated", updateListUI);
 });
 
-stik.register("TodosCtrl", "Show", function($template, $viewBag, $courier){
+stik.controller("TodosCtrl", "Show", function($template, $viewBag, $courier){
   var self      = this;
-  console.log($);
-  var tpl       = $($template);
-  var toggle    = tpl.getElement(".toggle");
-  var label     = tpl.getElement("label");
-  var editInput = tpl.getElement(".edit");
-  var remove    = tpl.getElement(".destroy");
+
+  var toggle    = $template.getElement(".toggle");
+  var label     = $template.getElement("label");
+  var editInput = $template.getElement(".edit");
+  var remove    = $template.getElement(".destroy");
 
   function updateView(todoData){
     $viewBag.$render(todoData);
@@ -86,12 +84,12 @@ stik.register("TodosCtrl", "Show", function($template, $viewBag, $courier){
 
   toggle.addEvent("change", function(event){
     self.todo.completed = !self.todo.completed;
-    tpl.toggleClass("completed", self.todo.completed);
+    $template.toggleClass("completed", self.todo.completed);
     $courier.$send("todo-updated", self.todo);
   });
 
   label.addEvent("dblclick", function(event){
-    tpl.addClass("editing");
+    $template.addClass("editing");
     editInput.focus();
   });
 
@@ -101,15 +99,15 @@ stik.register("TodosCtrl", "Show", function($template, $viewBag, $courier){
 
       updateView(self.todo);
 
-      tpl.removeClass("editing");
+      $template.removeClass("editing");
     }
   }).addEvent("blur", function(event){
-    tpl.removeClass("editing");
+    $template.removeClass("editing");
   });
 
   remove.addEvent("click", function(){
     $courier.$send("todo-removed", self.todo);
-    tpl.destroy();
+    $template.destroy();
   });
 
   var unsubscribe = $courier.$receive("bind-todo", function(todoData){
@@ -119,9 +117,8 @@ stik.register("TodosCtrl", "Show", function($template, $viewBag, $courier){
   });
 });
 
-stik.register("TodosCtrl", "New", function($template, $courier){
-  var tpl = $($template);
-  var input = tpl.getElement("input");
+stik.controller("TodosCtrl", "New", function($template, $courier){
+  var input = $template.getElement("input");
 
   input.addEvent("keyup", function(event){
     if (event.key === "enter") {
