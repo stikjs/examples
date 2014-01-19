@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Playing with URLs</title>
+</head>
+<body>
+  <h2>Update the url query to see them reflect in here</h2>
+  <div data-controller="UrlCtrl" data-action="Queries">
+    <button>Update Queries</button>
+    <span data-bind="queries"></span>
+  </div>
+
+  <script src="../stik.js" type="text/javascript" charset="utf-8"></script>
+
+  <script type="text/javascript">
+    stik.controller("UrlCtrl", "Queries", function($template, $urlState, $viewBag){
+      var button = $template.find("button");
+
+      button.click(function(){
+        $viewBag.$push({
+          queries: JSON.stringify($urlState.$queries())
+        });
+      });
+    });
+  </script>
+</body>
+</html>
