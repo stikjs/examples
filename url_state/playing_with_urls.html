@@ -11,12 +11,12 @@
   </div>
 
   <script src="../stik.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../extensions/stik_url_state.js" type="text/javascript" charset="utf-8"></script>
 
   <script type="text/javascript">
     stik.controller("UrlCtrl", "Queries", function($template, $urlState, $viewBag){
-      var button = $template.find("button");
-
-      button.click(function(){
+      var button = $template.getElementsByTagName("button")[0];
+      button.addEventListener("click", function(){
         $viewBag.$push({
           queries: JSON.stringify($urlState.$queries())
         });
